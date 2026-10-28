@@ -6,39 +6,95 @@
     <title>Tambah Pelanggan</title>
 </head>
 <body>
-    <h1>Tambah Pelanggan - Kelompok 6</h1>
+
+    <h1>Tambah Pelanggan</h1>
+
+    @if (session('success'))
+        <p style="color: green;">
+            {{ session('success') }}
+        </p>
+    @endif
 
     @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        <div style="color: red;">
+            <strong>Data belum berhasil disimpan:</strong>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <form action="{{ route('pelanggan.store') }}" method="POST">
         @csrf
 
-        <label>Nama:</label><br>
-        <input type="text" name="nama" value="{{ old('nama') }}" required>
-        <br><br>
+        <p>
+            <label for="nama">Nama Pelanggan:</label><br>
+            <input
+                type="text"
+                id="nama"
+                name="nama"
+                value="{{ old('nama') }}"
+                required
+            >
+        </p>
 
-        <label>Alamat:</label><br>
-        <textarea name="alamat" required>{{ old('alamat') }}</textarea>
-        <br><br>
+        <p>
+            <label for="alamat">Alamat:</label><br>
+            <input
+                type="text"
+                id="alamat"
+                name="alamat"
+                value="{{ old('alamat') }}"
+                required
+            >
+        </p>
 
-        <label>No. Telepon:</label><br>
-        <input type="text" name="no_telepon" value="{{ old('no_telepon') }}" required>
-        <br><br>
+        <p>
+            <label for="email">Email:</label><br>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="{{ old('email') }}"
+            >
+        </p>
 
-        <label>Email:</label><br>
-        <input type="email" name="email" value="{{ old('email') }}">
-        <br><br>
+        <p>
+            <label for="kategori">Kategori:</label><br>
+            <select id="kategori" name="kategori" required>
+                <option value="">-- Pilih Kategori --</option>
+                <option value="Umum" {{ old('kategori') == 'Umum' ? 'selected' : '' }}>Umum</option>
+                <option value="VIP" {{ old('kategori') == 'VIP' ? 'selected' : '' }}>VIP</option>
+                <option value="Member" {{ old('kategori') == 'Member' ? 'selected' : '' }}>Member</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="tanggal_daftar">Tanggal Daftar:</label><br>
+            <input
+                type="date"
+                id="tanggal_daftar"
+                name="tanggal_daftar"
+                value="{{ old('tanggal_daftar') }}"
+                required
+            >
+        </p>
+
+        <p>
+            <label for="keterangan">Keterangan:</label><br>
+            <textarea
+                id="keterangan"
+                name="keterangan"
+                rows="4"
+                cols="30"
+            >{{ old('keterangan') }}</textarea>
+        </p>
 
         <button type="submit">Simpan</button>
+        <a href="{{ route('pelanggan.index') }}">Kembali</a>
     </form>
 
-    <br>
-    <a href="{{ route('pelanggan.index') }}">Kembali</a>
 </body>
 </html>
