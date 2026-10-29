@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelanggan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PelangganController extends Controller
 {
@@ -29,6 +30,12 @@ class PelangganController extends Controller
             'tanggal_daftar' => 'required|date',
             'keterangan' => 'nullable|string',
         ]);
+
+        do {
+            $kode = 'PLG-' . strtoupper(Str::random(5));
+        } while (Pelanggan::where('kode_pelanggan', $kode)->exists());
+
+        $validated['kode_pelanggan'] = $kode;
 
         Pelanggan::create($validated);
 

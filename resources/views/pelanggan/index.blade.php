@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Pelanggan</title>
+    <title>Data Pelanggan</title>
 </head>
 <body>
 
-    <h1>Daftar Pelanggan</h1>
+    <h1>Data Pelanggan</h1>
 
     @if (session('success'))
         <p style="color: green;">
@@ -22,7 +22,7 @@
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
             <tr>
-                <th>No</th>
+                <th>Kode Pelanggan</th>
                 <th>Nama</th>
                 <th>Alamat</th>
                 <th>Email</th>
@@ -36,15 +36,17 @@
         <tbody>
             @forelse ($pelanggans as $pelanggan)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $pelanggan->kode_pelanggan ?? '-' }}</td>
                     <td>{{ $pelanggan->nama }}</td>
                     <td>{{ $pelanggan->alamat }}</td>
                     <td>{{ $pelanggan->email ?? '-' }}</td>
-                    <td>{{ $pelanggan->kategori ?? '-' }}</td>
+                    <td>{{ $pelanggan->kategori }}</td>
                     <td>{{ $pelanggan->tanggal_daftar ?? '-' }}</td>
                     <td>{{ $pelanggan->keterangan ?? '-' }}</td>
                     <td>
-                        <a href="{{ route('pelanggan.edit', $pelanggan->id) }}">Edit</a>
+                        <a href="{{ route('pelanggan.edit', $pelanggan->id) }}">
+                            Edit
+                        </a>
 
                         <form
                             action="{{ route('pelanggan.destroy', $pelanggan->id) }}"
@@ -54,6 +56,7 @@
                         >
                             @csrf
                             @method('DELETE')
+
                             <button type="submit">Hapus</button>
                         </form>
                     </td>

@@ -31,6 +31,7 @@ class PelangganFactory extends Factory
         ];
 
         return [
+            'kode_pelanggan' => fake()->unique()->numerify('PLG-#####'),
             'nama' => fake()->randomElement($nama),
             'alamat' => fake()->randomElement($alamat),
             'email' => fake()->unique()->safeEmail(),
